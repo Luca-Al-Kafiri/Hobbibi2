@@ -1,0 +1,49 @@
+{% extends "hobbibi/layout.html" %}
+{% load static %}
+{% block title %}
+    Search
+{% endblock %}
+
+{% block body %}
+<div class="center">
+    <h1>Hello {{request.user.username}}!</h1>
+    <small>{{ user.country}}</small>
+    <small>{{user.city}}</small>
+    <form id="form">
+    <select name="hobbi" id="hobbi">
+        {% for h in hobbies %}
+            <option value="{{h}}">{{h}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Search">
+</form>
+</div>
+<div id="table">
+    <table id="main">
+        <thead class="thead">
+            <th>Name</th>
+            <th>Age</th>
+            <th>Hobbi</th>
+        </thead>
+        {% for match in matchs %}
+        <tbody>
+            <td ><a class="link" href="{% url 'profile' match.user %}">{{match.user}}</a></td>
+            <td >{{match.user.age}}</td>
+            <td >{{match.hobbi}}</td>
+        </tbody>
+        {% endfor %}
+        </table>
+        <table id="search">
+            <thead class="thead">
+                <th>Name</th>
+                <th>Age</th>
+                <th>Hobbi</th>
+            </thead>
+            <tbody id="mytable">
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'hobbibi/js.js' %}" ></script>
+{% endblock %}

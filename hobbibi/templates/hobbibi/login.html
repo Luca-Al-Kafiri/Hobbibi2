@@ -1,0 +1,31 @@
+{% extends "hobbibi/layout.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block body %}
+    {% if message %}
+    <div class="error">{{ message }}</div>
+    {% endif %}
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" name="username" placeholder="Username" autofocus>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="Password">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Login">
+        <div>
+            <input name='ip' id='ip' type="hidden">
+        </div>
+    </form>
+    <script>
+        function getIP(json) {
+          let ip = json.ip;
+          document.querySelector('#ip').value = ip;
+        }   
+    </script>
+    <script src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
+{% endblock %}

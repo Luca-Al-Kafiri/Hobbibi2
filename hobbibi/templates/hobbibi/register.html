@@ -1,0 +1,43 @@
+{% extends "hobbibi/layout.html" %}
+{% block title %}
+    Register
+{% endblock %}
+
+{% block body %}
+    {% if message %}
+        <div class="error">{{ message }}</div>
+    {% endif %}
+    <form action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <input  type="text" name="username" placeholder="Username" autofocus required>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+        <div class="form-group">
+            <input type="password" name="confirm" placeholder="Confirm password" required>
+        </div>
+        <div class="form-group">
+            <input type="text" name="age" placeholder="Year of birth" required>
+        </div>
+        <div class="form-group">
+            <select name="hobby" id="" required>
+                {% for hobbi in hobbies %}
+                <option value="{{hobbi.id}}">{{hobbi.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Register">
+        <div>
+            <input name='ip' id='ip' type="hidden">
+        </div>
+    </form>
+    <script>
+        function getIP(json) {
+          let ip = json.ip;
+          document.querySelector('#ip').value = ip;
+        }   
+    </script>
+    <script src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
+{% endblock %}

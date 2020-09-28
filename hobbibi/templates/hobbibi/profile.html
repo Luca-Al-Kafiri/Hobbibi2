@@ -1,0 +1,62 @@
+{% extends "hobbibi/layout.html" %}
+{% load static %}
+{% block title %}
+    Pofile
+{% endblock %}
+
+{% block body %}
+<div id="head">
+<div class="pro">
+    <h1>{{owner.username}}</h1>
+    <h6>Age: {{owner.age}}</h6>
+    <h4>Hobbies</h4>
+    <ul id="hobbies">
+    {% for hobbi in hobbies %}
+        <li>{{ hobbi.hobbi}} 
+            {% if owner.username == request.user.username %}
+            <a href="" class='hobbi{{hobbi.id}}' id="h" data-hobbi="{{hobbi.id}}">x</a>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% if owner.username == request.user.username %}
+    <form id="form">
+        <select name="hobby" id="hobby" required>
+            {% for hobbi in h %}
+            <option value="{{hobbi.id}}">{{hobbi.name}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" class="btn btn-primary" value="Add">
+    </form>
+{% endif %}
+</div>
+{% if owner.username != request.user.username %}
+<div class="pro">
+<div id="meg">
+<ul id="msg">
+{% for mes in messages %} 
+{% if mes.sender == request.user %}  
+    <li class="c" >{{ mes.message}} 
+    <a href="" id="m" class="msg{{mes.id}}" data-msg="{{mes.id}}">x</a>
+    <br><small>{{mes.timestamp}}</small></li>
+    {% else %}
+    <li class="chat">{{ mes.message}} 
+    <br><small>{{mes.timestamp}}</small></li>
+    {% endif %}
+{% endfor %}
+</ul>
+</div>
+<div id="send">
+<form id="formmsg">
+    <textarea name="message" id="message" autofocus></textarea><br>
+    <input type="submit" name="" id="submit" class="btn btn-primary" value="Send">
+</form> 
+</div>
+</div>
+{% endif %}
+</div>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'hobbibi/hobbi.js' %}" ></script>
+    <script src="{% static 'hobbibi/message.js' %}" ></script>
+{% endblock %}
