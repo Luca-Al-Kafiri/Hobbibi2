@@ -159,12 +159,12 @@ def login_view(request):
         location = geo_lookup.get_location(ip)
         country = location["country_name"]
         city = location["city"]
-        user = User.objects.get(username=username)
-        user.country = country
-        user.city = city
-        user.save()
         user = authenticate(request, username=username, password=password)
         if user is not None:
+            user = User.objects.get(username=username)
+            user.country = country
+            user.city = city
+            user.save()
             login(request, user)
             return HttpResponseRedirect(reverse("search"))
         else:
