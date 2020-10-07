@@ -14,7 +14,7 @@
     {% for hobbi in hobbies %}
         <li>{{ hobbi.hobbi}} 
             {% if owner.username == request.user.username %}
-            <a href="" class='hobbi{{hobbi.id}}' id="h" data-hobbi="{{hobbi.id}}">x</a>
+            <a href="" class='hobbi{{hobbi.id}}' id="h" data-hobbi="{{hobbi.id}}"><img id="icon" src="{% static 'hobbibi/icon-delete-16.png' %}" alt=""></a>
             {% endif %}
         </li>
     {% endfor %}
@@ -37,7 +37,7 @@
 {% for mes in messages %} 
 {% if mes.sender == request.user %}  
     <li class="c" >{{ mes.message}} 
-    <a href="" id="m" class="msg{{mes.id}}" data-msg="{{mes.id}}">x</a>
+    <a href="" id="m" class="msg{{mes.id}}" data-msg="{{mes.id}}"><img id="icon" src="{% static 'hobbibi/icon-delete-16.png' %}" alt=""></a>
     <br><small>{{mes.timestamp}}</small></li>
     {% else %}
     <li class="chat">{{ mes.message}} 
