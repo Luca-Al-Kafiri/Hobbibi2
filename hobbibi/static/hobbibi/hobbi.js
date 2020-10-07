@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function(){
             if (result.status == 201){
 
         let l = document.createElement('li');
-        l.innerHTML = `${result.hobbi} <a href="">x</a>`;
+        l.innerHTML = `${result.hobbi} <a href=""><img id="icon" src="/static/hobbibi/icon-delete-16.png" alt=""></a>`;
         let a = l.children[0];
         a.className = `hobbi${result.id}`;
         a.setAttribute("id", "h")

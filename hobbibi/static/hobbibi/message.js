@@ -26,14 +26,14 @@ document.addEventListener("DOMContentLoaded", function(){
         .then(result => {
             let l = document.createElement("li");
             l.innerHTML = `${result[0].message}
-            <a href="">x</a><br><small>${result[0].timestamp}</small>`;
+            <a href=""><img id="icon" src="/static/hobbibi/icon-delete-16.png" alt=""></a><br><small>${result[0].timestamp}</small>`;
             let a = l.children[0];
             a.className = `msg${result[0].id} m`;
             a.setAttribute("id", "m");
             a.dataset.msg = `${result[0].id}`;
             document.querySelector("#msg").appendChild(l);
             l.className = "c";
-            console.log(l.className)
+            console.log(l)
             let m = document.querySelector("#message");
             m.value = '';
             submit.disabled = true;
