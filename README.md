@@ -2,7 +2,6 @@
 
 Hobbibi is a mobile-responsive website that helps users to find people in their city who have the same hobbies and makes it easier to communicate with them.
 The project utilize Django on the back-end and JavaScript on the front-end.
-It is unique and different from the other projects in CS50W.
 
 ##### Files:
 - admin.py: Contains registered models.
