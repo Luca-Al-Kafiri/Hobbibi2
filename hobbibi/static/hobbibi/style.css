@@ -45,8 +45,8 @@ body{
 #meg{
     display: flex;
     flex-direction: column-reverse;
-    height: 350px;
-    width: 350px;
+    height: 300px;
+    width: 300px;
     word-wrap: break-word;
     overflow: auto;
 }
