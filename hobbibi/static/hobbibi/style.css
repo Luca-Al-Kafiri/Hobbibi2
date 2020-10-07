@@ -52,7 +52,8 @@ body{
 }
 
 #h, #m{
-    color: #CC0000;
+    float: right;
+    padding-right: 3px;
 }
 
  form{
@@ -98,4 +99,9 @@ td, th{
 
 .link:hover {
     text-decoration: none;
+}
+
+#icon{
+    height: auto;
+    width: 15px;
 }
