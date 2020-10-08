@@ -50,6 +50,8 @@ function delete_message(){
     document.querySelectorAll('#m').forEach(function(a){
         let m = a.dataset.msg;
         a.onclick = function(event){
+            var sure = confirm("Are you sure you want to delete this message?");
+            if(sure){
             event.preventDefault();
             fetch('/delete_msg', {
                 method: "PUT", 
@@ -61,12 +63,14 @@ function delete_message(){
             .then(result => {
                 if (result.status == 201){
                     let l = document.querySelector(`.msg${m}`);
-                    l.parentElement.remove();
+                    // l.parentElement.remove();
+                    l.parentElement.innerHTML = "<div style='background-color: white; color: #007bff; font-size: 12px;'><i>This message was deleted</i></div>";
                                        
             }
             })
             return false;
         }
+    }
         
 })
 

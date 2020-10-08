@@ -98,7 +98,8 @@ def delete_msg(request):
     if request.method == "PUT":
         data = json.loads(request.body)
         msg = Message.objects.get(id = data["msg"])
-        msg.delete()
+        msg.message = "This message was deleted"
+        msg.save()
         return JsonResponse({"status": 201})
 
 

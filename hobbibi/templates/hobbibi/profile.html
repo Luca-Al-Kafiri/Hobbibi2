@@ -1,7 +1,7 @@
 {% extends "hobbibi/layout.html" %}
 {% load static %}
 {% block title %}
-    Pofile
+    Profile
 {% endblock %}
 
 {% block body %}
@@ -35,12 +35,16 @@
 <div id="meg">
 <ul id="msg">
 {% for mes in messages %} 
-{% if mes.sender == request.user %}  
-    <li class="c" >{{ mes.message}} 
+    {% if mes.sender == request.user and mes.message != "This message was deleted"%}  
+    <li class="c" >{{mes.message}} 
     <a href="" id="m" class="msg{{mes.id}}" data-msg="{{mes.id}}"><img id="icon" src="{% static 'hobbibi/icon-delete-16.png' %}" alt=""></a>
     <br><small>{{mes.timestamp}}</small></li>
+    {% elif mes.message == "This message was deleted" and mes.sender == request.user %}
+    <div class="d2" style='background-color: white; color: #007bff; font-size: 12px;'><i>{{mes.message}}</i></div>
+    {% elif mes.message == "This message was deleted" %}
+    <div class="d" style='background-color: white; color: #007bff; font-size: 12px;'><i>{{mes.message}}</i></div>
     {% else %}
-    <li class="chat">{{ mes.message}} 
+    <li class="chat">{{mes.message}} 
     <br><small>{{mes.timestamp}}</small></li>
     {% endif %}
 {% endfor %}
