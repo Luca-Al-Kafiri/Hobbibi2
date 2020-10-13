@@ -7,7 +7,7 @@
     {% if message %}
         <div class="error">{{ message }}</div>
     {% endif %}
-    <form action="{% url 'register' %}" method="POST">
+    <form action="{% url 'register' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             <input  type="text" name="username" placeholder="Username" autofocus required>
@@ -20,6 +20,10 @@
         </div>
         <div class="form-group">
             <input type="text" name="age" placeholder="Year of birth" required>
+        </div>
+        <div class="form-group image">
+            <label for="image"><small>Profile picture</small></label><br>
+            <input type="file" name="profile" id="image" required>
         </div>
         <div class="form-group">
             <select name="hobby" id="" required>

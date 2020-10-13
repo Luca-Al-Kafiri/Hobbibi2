@@ -125,3 +125,19 @@ th {
   height: auto;
   width: 15px;
 }
+
+#profile {
+  max-height: 200px;
+  margin-bottom: 15px;
+  box-shadow: 5px 5px 10px gray;
+  border-radius: 5px;
+}
+
+.image {
+  border: 1px solid lightgray;
+  width: 300px;
+  margin: 0 auto;
+  padding: 2px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px grey;
+}

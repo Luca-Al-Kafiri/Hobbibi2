@@ -8,6 +8,7 @@ class User(AbstractUser):
     country = models.CharField(max_length=64, default='G')
     city = models.CharField(max_length=64, default='Tbilisi')
     age = models.IntegerField(default=30)
+    image = models.ImageField(upload_to='images/', blank=True)
 
 class Hobbi(models.Model):
     name = models.CharField(max_length=64)

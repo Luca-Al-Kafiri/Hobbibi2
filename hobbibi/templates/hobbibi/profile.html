@@ -8,6 +8,9 @@
 <div id="head">
 <div class="pro">
     <h1>{{owner.username}}</h1>
+    {% if owner.image %}
+    <img id="profile" src="{{owner.image.url}}" alt="">
+    {% endif %}
     <h6>Age: {{owner.age}}</h6>
     <h4>Hobbies</h4>
     <ul id="hobbies">

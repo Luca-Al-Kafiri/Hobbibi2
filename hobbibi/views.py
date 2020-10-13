@@ -57,7 +57,6 @@ def profile(request, user):
     u = User.objects.get(id=request.user.id)
     us = Message.objects.filter(recipient=u, read=False).values("sender").distinct()
     new_msg = User.objects.filter(id__in=us)
-    print(new_msg)
     count = Message.objects.filter(recipient=sender, read=False).count()
     return render(request, "hobbibi/profile.html", {"hobbies": hobbies, 'owner': owner, "h":h,"messages": messages, "count": count, "new_msg": new_msg })
 
@@ -121,6 +120,7 @@ def register(request):
         hobbies = Hobbi.objects.all()
         username = request.POST["username"]
         password = request.POST["password"]
+        image = request.FILES['profile']
         email = "luca@luca.com"
         h = request.POST["hobby"]
         year = int(request.POST["age"])
@@ -139,6 +139,7 @@ def register(request):
             user.age = age
             user.city= city
             user.country = country
+            user.image = image
             user.save()
             ho = Hobbi.objects.get(id=h)
             hobbi = Hobbies.objects.create(user=user, hobbi=ho)
