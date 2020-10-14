@@ -11,6 +11,13 @@
     {% if owner.image %}
     <img id="profile" src="{{owner.image.url}}" alt="">
     {% endif %}
+    {% if owner.username == request.user.username %}
+    <form action="{% url 'profile' owner %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="image">
+        <input type="submit" value="Change">
+        </form><br>
+    {% endif %}
     <h6>Age: {{owner.age}}</h6>
     <h4>Hobbies</h4>
     <ul id="hobbies">

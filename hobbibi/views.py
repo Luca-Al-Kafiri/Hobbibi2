@@ -58,6 +58,11 @@ def profile(request, user):
     us = Message.objects.filter(recipient=u, read=False).values("sender").distinct()
     new_msg = User.objects.filter(id__in=us)
     count = Message.objects.filter(recipient=sender, read=False).count()
+    if request.method == "POST":
+        image = request.FILES["image"]
+        owner.image = image
+        owner.save()
+        return redirect('profile', user=user)
     return render(request, "hobbibi/profile.html", {"hobbies": hobbies, 'owner': owner, "h":h,"messages": messages, "count": count, "new_msg": new_msg })
 
 
