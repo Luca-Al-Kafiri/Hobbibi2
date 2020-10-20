@@ -63,7 +63,6 @@ function delete_message(){
             .then(result => {
                 if (result.status == 201){
                     let l = document.querySelector(`.msg${m}`);
-                    // l.parentElement.remove();
                     l.parentElement.innerHTML = "<div style='background-color: white; color: #007bff; font-size: 12px;'><i>This message was deleted</i></div>";
                                        
             }

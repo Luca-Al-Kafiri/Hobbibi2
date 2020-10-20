@@ -46,6 +46,6 @@ class Message(models.Model):
             "recipient": self.recipient.username,
             "message": self.message,
             "read": self.read,
-            "timestamp": self.timestamp.strftime("%b %d, %Y %H:%-M"),
+            "timestamp": self.timestamp.strftime("%b %d, %Y %H:%M"),
         }
 
