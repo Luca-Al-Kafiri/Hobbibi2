@@ -12,9 +12,9 @@
     <img id="profile" src="{{owner.image.url}}" alt="">
     {% endif %}
     {% if owner.username == request.user.username %}
-    <form action="{% url 'profile' owner %}" method="POST" enctype="multipart/form-data">
+    <form id="pic" action="{% url 'profile' owner %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="image">
+        <input type="file" name="image" style="padding: 2px;">
         <input type="submit" value="Change">
         </form><br>
     {% endif %}
@@ -37,8 +37,8 @@
             {% endfor %}
         </select>
         <input type="submit" class="btn btn-primary" value="Add">
-    </form>
-{% endif %}
+    </form><br>
+    {% endif %}
 </div>
 {% if owner.username != request.user.username %}
 <div class="pro">

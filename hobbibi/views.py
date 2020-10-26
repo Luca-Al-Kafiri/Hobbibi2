@@ -41,7 +41,9 @@ def search(request):
         us = Message.objects.filter(recipient=u, read=False).values("sender").distinct()
         new_msg  = User.objects.filter(id__in=us)
         count = Message.objects.filter(recipient=u, read=False).count()
-        return render(request, 'hobbibi/search.html', {"matchs": matchs, "hobbies": hobbies, "count": count, "new_msg": new_msg })
+        c = Message.objects.filter(sender=u).values("recipient").distinct()
+        contacts = User.objects.filter(id__in=c)
+        return render(request, 'hobbibi/search.html', {"matchs": matchs, "hobbies": hobbies, "count": count, "new_msg": new_msg, "contacts": contacts })
 
 
 def profile(request, user):
@@ -63,7 +65,9 @@ def profile(request, user):
         owner.image = image
         owner.save()
         return redirect('profile', user=user)
-    return render(request, "hobbibi/profile.html", {"hobbies": hobbies, 'owner': owner, "h":h,"messages": messages, "count": count, "new_msg": new_msg })
+    c = Message.objects.filter(sender=u).values("recipient").distinct()
+    contacts = User.objects.filter(id__in=c)
+    return render(request, "hobbibi/profile.html", {"hobbies": hobbies, 'owner': owner, "h":h,"messages": messages, "count": count, "new_msg": new_msg, "contacts": contacts })
 
 
 @login_required

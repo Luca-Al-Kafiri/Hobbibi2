@@ -141,3 +141,81 @@ th {
   border-radius: 5px;
   box-shadow: 1px 1px 5px grey;
 }
+
+#hobby {
+  margin-bottom: 2px;
+}
+
+/* The side navigation menu */
+.sidenav {
+  height: 100vh; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: absolute; /* Stay in place */
+  z-index: 1;
+  top: 0; /* Stay at the top */
+  left: 0;
+  overflow: auto;
+  scrollbar-width: none;
+  background-color: #007bff;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  margin-top: 50px;
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 5px;
+  text-decoration: none;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@keyframes x {
+  0% {
+    opacity: 0%;
+  }
+  50% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+.l {
+  color: white;
+  margin-left: 2px;
+  font-weight: bold;
+}
+
+/* The element to apply the animation to */
+#m2,
+#c2 {
+  animation-name: x;
+  animation-duration: 0.5s;
+}
+
+@media screen and (max-width: 450px) {
+  .sidenav {
+    height: 230px;
+  }
+  .sidenav2 {
+    height: 230px;
+  }
+}
