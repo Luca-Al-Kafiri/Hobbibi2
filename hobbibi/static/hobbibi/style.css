@@ -148,7 +148,7 @@ th {
 
 /* The side navigation menu */
 .sidenav {
-  height: 100vh; /* 100% Full-height */
+  height: 90vh;
   width: 0; /* 0 width - change this with JavaScript */
   position: absolute; /* Stay in place */
   z-index: 1;

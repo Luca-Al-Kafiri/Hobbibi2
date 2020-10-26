@@ -17,7 +17,13 @@ from .models import User, Hobbi, Message, Hobbies
 
 
 def index(request):
-    return render(request, "hobbibi/index.html")
+    u = User.objects.get(id=request.user.id)
+    us = Message.objects.filter(recipient=u, read=False).values("sender").distinct()
+    new_msg  = User.objects.filter(id__in=us)
+    count = Message.objects.filter(recipient=u, read=False).count()
+    c = Message.objects.filter(sender=u).values("recipient").distinct()
+    contacts = User.objects.filter(id__in=c)
+    return render(request, "hobbibi/index.html", {"count": count, "new_msg": new_msg, "contacts": contacts})
 
 
 @login_required
