@@ -30,6 +30,19 @@
                 <ul class="navbar-nav ml-auto mt-2">
                     <li class="nav-item"><a class="nav-link" href="{%  url 'logout' %}">Log Out</a></li>
                 </ul>
+            {% else %}
+                <ul class="navbar-nav ml-auto mt-2">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
+                </ul>
+            {% endif %}
+        </div>
+    </nav>
+      {% block body %}
+      {% endblock %}
+      {% block script %}
+    {% endblock %}
+</div>
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <ul id="c2">
@@ -45,19 +58,6 @@
         {% endfor %}
     </ul>
   </div>
-            {% else %}
-                <ul class="navbar-nav ml-auto mt-2">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
-                </ul>
-            {% endif %}
-        </div>
-    </nav>
-      {% block body %}
-      {% endblock %}
-      {% block script %}
-    {% endblock %}
-</div>
     <script>
         function openNav() {
             document.getElementById("m2").style.display = 'none'
