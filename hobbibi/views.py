@@ -149,10 +149,7 @@ def register(request):
         hobbies = Hobbi.objects.all()
         username = request.POST["username"]
         password = request.POST["password"]
-        try:
-            image = request.FILES['profile']
-        except:
-            image = "media/images/IMG_4282.JPG"
+        image = request.FILES['profile']
         email = "luca@luca.com"
         h = request.POST["hobby"]
         year = int(request.POST["age"])
