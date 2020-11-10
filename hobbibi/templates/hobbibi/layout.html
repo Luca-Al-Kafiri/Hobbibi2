@@ -14,7 +14,7 @@
 </head>
 <body>
     <div>
-    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+    <!-- <nav class="navbar navbar-expand-md navbar-dark bg-primary">
         <a class="navbar-brand" id="title" href="/">Hobbibi</a>
         <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbar" data-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
@@ -37,14 +37,37 @@
                 </ul>
             {% endif %}
         </div>
+    </nav> -->
+    <nav class="navbar navbar-dark bg-primary">
+        <a class="navbar-brand" id="title" href="/">Hobbibi</a>
     </nav>
+    <a class="menu" href="javascript:void(0)" onclick="openMain()">&#9776;</a>
+    <div id="mainnav" class="mymainnav">
+        <a href="javascript:void(0)" class="closemain" onclick="closeMain()">&#8680;</a>
+        {% if user.is_authenticated %}
+        <ul class='menulist'>
+            <li><a href="{% url 'profile' request.user %}">Profile</a></li>
+            <li><a href="{% url 'search' %}">Search</a></li>
+            <li><a href="javascript:void(0)" onclick="openNav2()">Inbox <small>{{count}}</small></a></li>
+            <li><a href="javascript:void(0)" onclick="openNav()">Contacts</a></li><br>
+            <li><a href="{%  url 'logout' %}">Log Out</a></li>
+        </ul>
+        {% else %}
+        <ul class='menulist'>
+            <li><a href="{% url 'register' %}">Register</a></li>
+            <li><a href="{% url 'login' %}">Log In</a></li>
+        </ul>
+        {% endif %}
+    </div>
+    <div id="blur">
       {% block body %}
       {% endblock %}
+    </div>
       {% block script %}
     {% endblock %}
 </div>
-<div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+<div id="mySidenav" class="sidenav mymainnav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8680;</a>
     <ul id="c2">
         <li class="l">Contacts:</li>
     {% for i in contacts %}
@@ -59,6 +82,16 @@
     </ul>
   </div>
     <script>
+        function openMain(){
+            document.getElementById("mainnav").style.width = '90px';
+            document.getElementById("blur").style.filter = "blur(3px)";
+        }
+
+        function closeMain(){
+            document.getElementById("mainnav").style.width = "0";
+            document.getElementById("blur").style.filter = "blur(0)";
+        }
+
         function openNav() {
             document.getElementById("m2").style.display = 'none'
             document.getElementById("c2").style.display = 'block'
@@ -76,6 +109,17 @@ function openNav2() {
     document.getElementById("c2").style.display = 'none'
     document.getElementById("mySidenav").style.width = '90px';
 }
+
+$(document).mouseup(function(e) { 
+    var container = $(".mymainnav"); // target ID or class 
+    // if the target of the click isn't the container nor a descendant of the container 
+    if (!container.is(e.target) && container.has(e.target).length === 0) { 
+        // get Event here 
+        $("a.closemain").click();
+        $("a.closebtn").click();
+    } 
+}); 
+
     </script>
 </body>
 </html>
