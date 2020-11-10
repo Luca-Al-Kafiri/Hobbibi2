@@ -234,6 +234,9 @@ th {
 /* The element to apply the animation to */
 #m2,
 #c2 {
+  height: 80vh;
+  overflow: auto;
+  overflow-x: hidden;
   margin-top: 20px;
   animation-name: x;
   animation-duration: 0.5s;
