@@ -142,7 +142,7 @@ th {
 
 .image {
   border: 1px solid lightgray;
-  width: 300px;
+  width: 330px;
   margin: 0 auto;
   padding: 2px;
   border-radius: 5px;
@@ -247,4 +247,8 @@ th {
 
 .menulist {
   margin-top: 20px;
+}
+
+.btn {
+  margin-bottom: 2px;
 }

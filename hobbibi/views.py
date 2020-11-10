@@ -19,11 +19,12 @@ from .models import User, Hobbi, Message, Hobbies
 def index(request):
     try:
         u = User.objects.get(id=request.user.id)
-        us = Message.objects.filter(recipient=u, read=False).values("sender").distinct()
-        new_msg  = User.objects.filter(id__in=us)
+        us = Message.objects.filter(
+            recipient=u, read=False).values("sender").distinct()
+        new_msg = User.objects.filter(id__in=us)
         count = Message.objects.filter(recipient=u, read=False).count()
         c = Message.objects.filter(sender=u).values("recipient").distinct()
-        contacts = User.objects.filter(id__in=c)
+        contacts = User.objects.filter(id__in=c).order_by('username')
         return render(request, "hobbibi/index.html", {"count": count, "new_msg": new_msg, "contacts": contacts})
     except:
         return render(request, "hobbibi/index.html")
@@ -33,26 +34,29 @@ def index(request):
 @csrf_exempt
 def search(request):
     h = Hobbies.objects.filter(user=request.user.id)
-    d=[]
+    d = []
     for hobbi in h:
         d.append(hobbi)
     hobbies = Hobbi.objects.filter(name__in=d)
     user = User.objects.get(username=request.user.username)
     users = User.objects.filter(city=user.city, country=user.country)
-    matchs = Hobbies.objects.select_related('user').filter(hobbi__in=hobbies, user__in=users).exclude(user=request.user.id).order_by("user")
+    matchs = Hobbies.objects.select_related('user').filter(
+        hobbi__in=hobbies, user__in=users).exclude(user=request.user.id).order_by("user")
     if request.method == "POST":
         data = json.loads(request.body)
         h = Hobbi.objects.get(name=data["hobbi"])
-        matchs = Hobbies.objects.select_related('user').filter(hobbi=h.id, user__in=users).exclude(user=request.user.id).order_by("user")
+        matchs = Hobbies.objects.select_related('user').filter(
+            hobbi=h.id, user__in=users).exclude(user=request.user.id).order_by("user")
         return JsonResponse([match.serialize() for match in matchs], safe=False)
     else:
         u = User.objects.get(id=request.user.id)
-        us = Message.objects.filter(recipient=u, read=False).values("sender").distinct()
-        new_msg  = User.objects.filter(id__in=us)
+        us = Message.objects.filter(
+            recipient=u, read=False).values("sender").distinct()
+        new_msg = User.objects.filter(id__in=us)
         count = Message.objects.filter(recipient=u, read=False).count()
         c = Message.objects.filter(sender=u).values("recipient").distinct()
-        contacts = User.objects.filter(id__in=c)
-        return render(request, 'hobbibi/search.html', {"matchs": matchs, "hobbies": hobbies, "count": count, "new_msg": new_msg, "contacts": contacts })
+        contacts = User.objects.filter(id__in=c).order_by('username')
+        return render(request, 'hobbibi/search.html', {"matchs": matchs, "hobbies": hobbies, "count": count, "new_msg": new_msg, "contacts": contacts})
 
 
 def profile(request, user):
@@ -60,13 +64,15 @@ def profile(request, user):
     owner = User.objects.get(username=user)
     hobbies = Hobbies.objects.select_related('user').filter(user=owner.id)
     sender = User.objects.get(id=request.user.id)
-    messages = Message.objects.filter(sender__in=(sender,owner), recipient__in=(owner, sender)).order_by("timestamp")
+    messages = Message.objects.filter(sender__in=(
+        sender, owner), recipient__in=(owner, sender)).order_by("timestamp")
     msg = Message.objects.filter(sender=owner, recipient=sender, read=False)
     for m in msg:
         m.read = True
         m.save()
     u = User.objects.get(id=request.user.id)
-    us = Message.objects.filter(recipient=u, read=False).values("sender").distinct()
+    us = Message.objects.filter(
+        recipient=u, read=False).values("sender").distinct()
     new_msg = User.objects.filter(id__in=us)
     count = Message.objects.filter(recipient=sender, read=False).count()
     if request.method == "POST":
@@ -75,8 +81,10 @@ def profile(request, user):
         owner.save()
         return redirect('profile', user=user)
     c = Message.objects.filter(sender=u).values("recipient").distinct()
-    contacts = User.objects.filter(id__in=c)
-    return render(request, "hobbibi/profile.html", {"hobbies": hobbies, 'owner': owner, "h":h,"messages": messages, "count": count, "new_msg": new_msg, "contacts": contacts })
+    contacts = User.objects.filter(id__in=c).order_by('username')
+    for i in contacts:
+        print(i.recipient)
+    return render(request, "hobbibi/profile.html", {"hobbies": hobbies, 'owner': owner, "h": h, "messages": messages, "count": count, "new_msg": new_msg, "contacts": contacts})
 
 
 @login_required
@@ -98,23 +106,25 @@ def add(request):
             id = add.id
             h = Hobbi.objects.get(id=data['hobbi'])
             hobbi = h.name
-            return JsonResponse({"hobbi": hobbi , "user": request.user.username, "id": id, "status": 201})
+            return JsonResponse({"hobbi": hobbi, "user": request.user.username, "id": id, "status": 201})
+
 
 @login_required
 @csrf_exempt
 def delete(request):
     if request.method == "PUT":
         data = json.loads(request.body)
-        hobbies = Hobbies.objects.get(id = data["hobbi"])
+        hobbies = Hobbies.objects.get(id=data["hobbi"])
         hobbies.delete()
         return JsonResponse({"status": 201})
+
 
 @login_required
 @csrf_exempt
 def delete_msg(request):
     if request.method == "PUT":
         data = json.loads(request.body)
-        msg = Message.objects.get(id = data["msg"])
+        msg = Message.objects.get(id=data["msg"])
         msg.message = "This message was deleted"
         msg.save()
         return JsonResponse({"status": 201})
@@ -128,7 +138,8 @@ def message(request):
         sender = User.objects.get(id=request.user.id)
         recipient = User.objects.get(username=data["user"])
         message = data["msg"]
-        msg = Message.objects.create(sender=sender, recipient=recipient, message=message)
+        msg = Message.objects.create(
+            sender=sender, recipient=recipient, message=message)
         msg.save()
         return JsonResponse([msg.serialize()], safe=False)
 
@@ -138,7 +149,10 @@ def register(request):
         hobbies = Hobbi.objects.all()
         username = request.POST["username"]
         password = request.POST["password"]
-        image = request.FILES['profile']
+        try:
+            image = request.FILES['profile']
+        except:
+            image = "media/images/IMG_4282.JPG"
         email = "luca@luca.com"
         h = request.POST["hobby"]
         year = int(request.POST["age"])
@@ -151,11 +165,11 @@ def register(request):
         age = today.year - year
         confirm = request.POST["confirm"]
         if password != confirm:
-            return render(request, "hobbibi/register.html", {"message":"Password does not match", "hobbies": hobbies})
+            return render(request, "hobbibi/register.html", {"message": "Password does not match", "hobbies": hobbies})
         try:
             user = User.objects.create_user(username, email, password)
             user.age = age
-            user.city= city
+            user.city = city
             user.country = country
             user.image = image
             user.save()
@@ -169,6 +183,7 @@ def register(request):
     else:
         hobbies = Hobbi.objects.all()
         return render(request, "hobbibi/register.html", {"hobbies": hobbies})
+
 
 def login_view(request):
     if request.method == "POST":
@@ -191,6 +206,7 @@ def login_view(request):
             return render(request, "hobbibi/login.html", {"message": "Invalid username and/or password."})
     else:
         return render(request, "hobbibi/login.html")
+
 
 def logout_view(request):
     logout(request)
