@@ -213,6 +213,33 @@ th {
   text-decoration: none;
 }
 
+.menu1 {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  margin-right: 30px;
+  margin-top: 15px;
+  right: 0;
+  color: white;
+  font-size: 35px;
+  font-weight: bold;
+}
+.menu1:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.menu1 .badge {
+  position: absolute;
+  top: 5px;
+  right: -5px;
+  padding: 1px 4px;
+  border-radius: 50%;
+  background: red;
+  font-size: small;
+  color: red;
+}
+
 @keyframes x {
   0% {
     opacity: 0%;
